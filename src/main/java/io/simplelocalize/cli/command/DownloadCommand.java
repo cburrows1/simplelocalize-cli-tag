@@ -35,6 +35,8 @@ public class DownloadCommand implements CliCommand
   public void invoke()
   {
     String downloadPath = configuration.getDownloadPath();
+    String secondaryDownloadPath = configuration.getSecondaryDownloadPath();
+    List<String> secondaryDownloadLanguages = configuration.getSecondaryDownloadLanguages();
     String downloadFormat = configuration.getDownloadFormat();
     String languageKey = configuration.getLanguageKey();
     List<String> downloadOptions = configuration.getDownloadOptions();
@@ -61,7 +63,11 @@ public class DownloadCommand implements CliCommand
       List<DownloadableFile> downloadableFiles = client.fetchDownloadableFiles(downloadRequest);
       downloadableFiles
               .parallelStream()
-              .forEach(downloadableFile -> client.downloadFile(downloadableFile, downloadPath));
+              .forEach(downloadableFile -> {
+            	  client.downloadFile(downloadableFile, downloadPath);
+            	  if(secondaryDownloadLanguages.isEmpty() || secondaryDownloadLanguages.contains(downloadableFile.getLanguage()))
+            		  client.downloadFile(downloadableFile, secondaryDownloadPath);
+              });
       log.info(" 🎉 Download success!");
     } catch (InterruptedException e)
     {

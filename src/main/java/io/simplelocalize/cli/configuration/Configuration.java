@@ -20,6 +20,8 @@ public class Configuration
   private List<String> uploadOptions = new ArrayList<>();
 
   private String downloadPath;
+  private String secondaryDownloadPath;
+  private List<String> secondaryDownloadLanguages;
   private String downloadFormat;
   private List<String> downloadOptions = new ArrayList<>();
 
@@ -93,6 +95,26 @@ public class Configuration
   public void setDownloadPath(String downloadPath)
   {
     this.downloadPath = downloadPath;
+  }
+
+  public String getSecondaryDownloadPath()
+  {
+    return secondaryDownloadPath;
+  }
+
+  public void setSecondaryDownloadPath(String secondaryDownloadPath)
+  {
+    this.secondaryDownloadPath = secondaryDownloadPath;
+  }
+
+  public List<String> getSecondaryDownloadLanguages()
+  {
+    return secondaryDownloadLanguages;
+  }
+
+  public void setSecondaryDownloadLanguages(List<String> secondaryDownloadLanguages)
+  {
+    this.secondaryDownloadLanguages = secondaryDownloadLanguages;
   }
 
   public String getDownloadFormat()

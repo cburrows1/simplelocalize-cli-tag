@@ -83,13 +83,15 @@ public class SimplelocalizeCliCommand implements Runnable
           @Option(names = {"--uploadFormat"}, description = "Translations or keys format") String uploadFormat,
           @Option(names = {"--uploadOptions"}, split = ",", description = "(Optional) Read more about 'uploadOptions' param at docs.simplelocalize.io") List<String> uploadOptions,
           @Option(names = {"--downloadPath"}, description = "Directory where translations should be downloaded") String downloadPath,
+          @Option(names = {"--secondaryDownloadPath"}, description = "(Optional) Secondary directory where translations should be downloaded for baked in translations") String secondaryDownloadPath,
+          @Option(names = {"--secondaryDownloadLanguages"}, description = "(Optional) If secondary download path provided specify language(s) to include here") List<String> secondaryDownloadLanguages,
           @Option(names = {"--downloadFormat"}, description = "Download format for translation file") String downloadFormat,
           @Option(names = {"--downloadOptions"}, split = ",", description = "(Optional) Download options") List<String> downloadOptions,
           @Option(names = {"--languageKey"}, description = "(Optional) Specify language key for single file upload") String languageKey
   ) throws IOException
   {
     upload(apiKey, uploadPath, uploadFormat, uploadOptions, languageKey);
-    download(apiKey, downloadPath, downloadFormat, downloadOptions, languageKey);
+    download(apiKey, downloadPath, secondaryDownloadPath, secondaryDownloadLanguages, downloadFormat, downloadOptions, languageKey);
   }
 
   @Command(
@@ -143,6 +145,8 @@ public class SimplelocalizeCliCommand implements Runnable
   public void download(
           @Option(names = {"--apiKey"}, description = "Project API Key") String apiKey,
           @Option(names = {"--downloadPath"}, description = "Directory where translations should be downloaded") String downloadPath,
+          @Option(names = {"--secondaryDownloadPath"}, description = "(Optional) Secondary directory where translations should be downloaded for baked in translations") String secondaryDownloadPath,
+          @Option(names = {"--secondaryDownloadLanguages"}, description = "(Optional) If secondary download path provided specify language(s) to include here") List<String> secondaryDownloadLanguages,
           @Option(names = {"--downloadFormat"}, description = "Download format for translation file") String downloadFormat,
           @Option(names = {"--downloadOptions"}, split = ",", description = "(Optional) Download options") List<String> downloadOptions,
           @Option(names = {"--languageKey"}, description = "(Optional) Setup languageKey parameter to download file with only one language translations") String languageKey
@@ -158,6 +162,13 @@ public class SimplelocalizeCliCommand implements Runnable
     if (StringUtils.isNotEmpty(downloadPath))
     {
       configuration.setDownloadPath(downloadPath);
+    }
+    if (StringUtils.isNotEmpty(secondaryDownloadPath))
+    {
+      configuration.setSecondaryDownloadPath(secondaryDownloadPath);
+    }
+    if(secondaryDownloadLanguages != null){
+      configuration.setSecondaryDownloadLanguages(secondaryDownloadLanguages);
     }
     if (StringUtils.isNotEmpty(downloadFormat))
     {
