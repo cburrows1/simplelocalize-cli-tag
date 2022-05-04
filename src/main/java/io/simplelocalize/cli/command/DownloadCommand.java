@@ -60,6 +60,7 @@ public class DownloadCommand implements CliCommand
 
     try
     {
+    	//downloads some files twice - waste of resources
       List<DownloadableFile> downloadableFiles = client.fetchDownloadableFiles(downloadRequest);
       downloadableFiles
               .parallelStream()
