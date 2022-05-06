@@ -5,6 +5,8 @@ import io.simplelocalize.cli.client.SimpleLocalizeClient;
 import io.simplelocalize.cli.client.dto.DownloadRequest;
 import io.simplelocalize.cli.client.dto.DownloadableFile;
 import io.simplelocalize.cli.configuration.Configuration;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +68,7 @@ public class DownloadCommand implements CliCommand
               .parallelStream()
               .forEach(downloadableFile -> {
             	  client.downloadFile(downloadableFile, downloadPath);
-            	  if(secondaryDownloadLanguages.isEmpty() || secondaryDownloadLanguages.contains(downloadableFile.getLanguage()))
+            	  if(StringUtils.isNotEmpty(secondaryDownloadPath) && (secondaryDownloadLanguages.isEmpty() || secondaryDownloadLanguages.contains(downloadableFile.getLanguage())))
             		  client.downloadFile(downloadableFile, secondaryDownloadPath);
               });
       log.info(" 🎉 Download success!");

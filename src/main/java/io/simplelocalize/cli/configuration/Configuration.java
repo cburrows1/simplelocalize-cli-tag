@@ -21,7 +21,7 @@ public class Configuration
 
   private String downloadPath;
   private String secondaryDownloadPath;
-  private List<String> secondaryDownloadLanguages;
+  private List<String> secondaryDownloadLanguages = new ArrayList<>();
   private String downloadFormat;
   private List<String> downloadOptions = new ArrayList<>();
 
